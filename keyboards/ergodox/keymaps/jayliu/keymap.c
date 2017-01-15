@@ -5,19 +5,27 @@
 #include "keymap_dvp.h"
 
 // Layer definitions
-#define BASE 0 // default layer
-#define FKEY 1 // Function keys, media
-#define NUMB 3 // number keys
-#define SUBL 4 // Sublime Text
-#define SKCH 5 // Bohemian Sketch
-#define _DYN 6 // Dynamic Macro Recording
+enum {
+    BASE = 0,   // default layer
+    FKEY,       // Function keys, media
+    NUMB,       // number keys
+    SUBL,       // Sublime Text
+    SKCH,       // Bohemian Sketch
+    _DYN,       // Dynamic Macro Recording
+};
 
 // FN definitions
+// OS-specific keys
+#define SUPER KC_LGUI
 #define JL_NUMB KC_FN1
 
-// Macro definitions
 
-// Dynamic Macro
+
+
+/*=====================================
+=            Dynamic Macro            =
+=====================================*/
+
 enum planck_keycodes {
   QWERTY = SAFE_RANGE,
   COLEMAK,
@@ -43,9 +51,47 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
+/*=====  End of Dynamic Macro  ======*/
+
+
+/*===============================================
+=            Tap Dance Configuration            =
+===============================================*/
+
+// Declarations
+enum {
+    JL_CP = 0         // Paste on single tap, Copy on double tap
+};
+
+static void copy_paste (qk_tap_dance_state_t *state, void *user_data) {
+
+    if (state->count == 1) {
+        register_code (SUPER);
+        register_code (DP_V);
+        unregister_code (DP_V);
+        unregister_code (SUPER);
+    } else {
+        register_code (SUPER);
+        register_code (DP_C);
+        unregister_code (DP_C);
+        unregister_code (SUPER);
+        reset_tap_dance (state);
+    }
+}
+
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+
+    [JL_CP]  = ACTION_TAP_DANCE_FN (copy_paste),
+
+};
+
+/*=====  End of Tap Dance Configuration  ======*/
+
+
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-
 
 // see quantum_keycodes.h
 // AlignTo Regex: /\*\*//l2
@@ -55,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /**/  KC_1,               /**/  KC_2,               /**/  KC_3,               /**/  KC_4,               /**/  KC_5,               /**/  KC_6,               /**/  KC_BSLS,            /**/
     /**/  KC_GRV,             /**/  KC_Q,               /**/  KC_W,               /**/  KC_E,               /**/  KC_R,               /**/  KC_T,               /**/  MO(_DYN),           /**/
     /**/  KC_TAB,             /**/  KC_A,               /**/  KC_S,               /**/  KC_D,               /**/  KC_F,               /**/  KC_G,               /**/                      /**/
-    /**/  OSM(MOD_LSFT),      /**/  KC_Z,               /**/  KC_X,               /**/  KC_C,               /**/  KC_V,               /**/  KC_B,               /**/  KC_ESC,             /**/
+    /**/  OSM(MOD_LSFT),      /**/  KC_Z,               /**/  KC_X,               /**/  KC_C,               /**/  KC_V,               /**/  KC_B,               /**/  TD(JL_CP),          /**/
     /**/  KC_LCTL,            /**/  KC_HOME,            /**/  KC_WH_D,            /**/  KC_WH_U,            /**/  KC_END,             /**/                      /**/                      /**/
 
     /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_LALT,            /**/  MO(FKEY),           /**/
