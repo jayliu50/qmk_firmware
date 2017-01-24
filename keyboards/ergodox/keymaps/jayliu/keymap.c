@@ -143,7 +143,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-// see quantum_keycodes.h
+// see tmk_core/common/keycode.h
+// see quantum/quantum_keycodes.h
 // AlignTo Regex: /\*\*//l2
 // Wrapping required keycodes around (parens), typically for MO() and getting back to original layer
 
@@ -223,26 +224,35 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS             /**/                      /**/                      /**/                      /**/                      /**/
     ),
 
+#define JMP_CHAR MEH(DP_QUOT)
+#define JMP_IN_LINE HYPR(DP_COMM)
+#define JMP_LINE MEH(DP_DOT)
+#define JMP_WORD MEH(DP_SCLN)
+#define JMP_SELECT HYPR(DP_SCLN)
+
+#define STEP_IN KC_F11
+#define STEP_OVER KC_F10
+#define STEP_OUT LSFT(KC_F11)
 
 
 [SUBL] = KEYMAP(
 //  /**/  5                   /**/  4                   /**/  3                   /**/  2                   /**/  1                   /**/  1'                  /**/  2'                  /**/
 //  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  // Basic
+    /**/  KC_TRNS,            /**/  JMP_IN_LINE,        /**/  JMP_CHAR,           /**/  JMP_LINE,           /**/  JMP_WORD,           /**/  JMP_SELECT,         /**/                      /**/  // Acejump
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  // Panel
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/                      /**/  // Basic
-    /**/  KC_TRNS,            /**/  HYPR(DP_COMM),      /**/  MEH(DP_QUOT),       /**/  MEH(DP_DOT),        /**/  MEH(DP_SCLN),       /**/  HYPR(DP_SCLN),      /**/  KC_TRNS,            /**/  // Acejump
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/                      /**/                      /**/  // MultiEditUtils
     /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/
     /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
 
-
+//  /**/  2'                  /**/  1'                  /**/  1                   /**/  2                   /**/  3                   /**/  4                   /**/  5                   /**/
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/                      /**/                      /**/  KC_F11,             /**/  KC_F10,             /**/  KC_TRNS,            /**/  LSFT(KC_F11),       /**/  KC_TRNS,            /**/  // Browser Debug
+    /**/                      /**/                      /**/  STEP_IN,            /**/  STEP_OVER,          /**/  KC_TRNS,            /**/  STEP_OUT,           /**/  KC_TRNS,            /**/  // Browser Debug
 
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/
     /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/
