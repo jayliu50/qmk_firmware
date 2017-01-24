@@ -36,6 +36,41 @@ const uint16_t PROGMEM fn_actions[] = {
 
 
 
+/*=========================================
+=            Macro Definitions            =
+=========================================*/
+
+// Macro Definitions
+enum {
+  PLVR_TOG = 0,     // Plover toggle
+  PLVR_DICT,        // Plover dictionary
+};
+
+const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
+{
+  switch(id) {
+
+    case PLVR_TOG: {
+        if (record->event.pressed) {
+            // this will be interpreted by my Plover dictionary to toggle steno mode
+            return MACRO( D(A), D(W), D(H), D(I), D(K), D(N), W(10), U(A), U(W), U(H), U(I), U(K), U(N), END);
+        }
+        break;
+    }
+    case PLVR_DICT: {
+        if (record->event.pressed) {
+            // This will be interpreted by my Plover dictionary to open up the dictionary
+            return MACRO( D(N), D(L), D(COMM), D(O), D(T), D(M), D(B), D(D), W(10), U(N), U(L), U(COMM), U(O), U(T), U(M), U(B), U(D), END);
+        }
+    }
+
+  }
+  return MACRO_NONE;
+};
+
+/*=====  End of Macro Definitions  ======*/
+
+
 
 /*=====================================
 =            Dynamic Macro            =
@@ -276,20 +311,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /**/  KC_NO,              /**/  KC_A,               /**/  KC_S,               /**/  KC_D,               /**/  KC_F,               /**/  KC_G,               /**/  KC_NO,              /**/
     /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/                      /**/                      /**/
 
-    /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_NO,              /**/  KC_TRNS,            /**/
-    /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/
+    /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_NO,              /**/  (KC_TRNS),            /**/
+    /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/  M(PLVR_DICT),       /**/
     /**/                      /**/                      /**/                      /**/                      /**/  KC_C,               /**/  KC_V,               /**/  MAGIC_TOGGLE_NKRO,  /**/
 
 
     /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/
-    /**/  KC_NO,              /**/  KC_6,               /**/  KC_7,               /**/  KC_8,               /**/  KC_9,               /**/  KC_0,               /**/  KC_NO,              /**/
+    /**/  M(PLVR_TOG),        /**/  KC_6,               /**/  KC_7,               /**/  KC_8,               /**/  KC_9,               /**/  KC_0,               /**/  KC_NO,              /**/
     /**/                      /**/  KC_Y,               /**/  KC_U,               /**/  KC_I,               /**/  KC_O,               /**/  KC_P,               /**/  KC_LBRC,            /**/
     /**/  KC_NO,              /**/  KC_H,               /**/  KC_J,               /**/  KC_K,               /**/  KC_L,               /**/  KC_SCLN,            /**/  KC_QUOT,            /**/
     /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_NO,              /**/
 
     /**/  (KC_TRNS),          /**/  KC_NO,              /**/                      /**/                      /**/                      /**/                      /**/                      /**/
-    /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/
-    /**/  KC_TRNS,            /**/  KC_N,               /**/  KC_M                /**/                      /**/                      /**/                      /**/                      /**/
+    /**/  (KC_TRNS),          /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/
+    /**/  (KC_TRNS),          /**/  KC_N,               /**/  KC_M                /**/                      /**/                      /**/                      /**/                      /**/
     ),
 
 }; // end of keymap definitions
