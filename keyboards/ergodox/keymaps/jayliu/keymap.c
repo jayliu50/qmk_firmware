@@ -44,6 +44,7 @@ const uint16_t PROGMEM fn_actions[] = {
 enum {
   PLVR_TOG = 0,     // Plover toggle
   PLVR_DICT,        // Plover dictionary
+  DBL_P0,           // 00
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
@@ -61,6 +62,12 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
         if (record->event.pressed) {
             // This will be interpreted by my Plover dictionary to open up the dictionary
             return MACRO( D(N), D(L), D(COMM), D(O), D(T), D(M), D(B), D(D), W(10), U(N), U(L), U(COMM), U(O), U(T), U(M), U(B), U(D), END);
+        }
+    }
+    case DBL_P0: {
+        if (record->event.pressed) {
+            // puts down two 0s
+            return MACRO( T(P0), T(P0), END );
         }
     }
 
@@ -204,20 +211,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  DP_D,               /**/  DP_E,               /**/  DP_F,               /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  DP_A,               /**/  DP_B,               /**/  DP_C,               /**/  KC_TRNS,            /**/                      /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  DP_X,               /**/                      /**/                      /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  DP_A,               /**/  DP_B,               /**/  DP_C,               /**/  KC_X,               /**/                      /**/
+    /**/  KC_TRNS,            /**/  KC_WH_U,            /**/  KC_END,             /**/  KC_UP,              /**/  KC_HOME,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
+    /**/  KC_TRNS,            /**/  KC_WH_D,            /**/  KC_LEFT,            /**/  KC_DOWN,            /**/  KC_RGHT,            /**/                      /**/                      /**/
 
     /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/
-    /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
+    /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  (KC_TRNS),          /**/
 
 
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_PSLS,            /**/  KC_PAST,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/  KC_TRNS,            /**/  KC_NO,              /**/  KC_P7,              /**/  KC_P8,              /**/  KC_P9,              /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/                      /**/  KC_PDOT,            /**/  KC_P4,              /**/  KC_P5,              /**/  KC_P6,              /**/  KC_PPLS,            /**/  KC_PENT,            /**/
-    /**/  KC_TRNS,            /**/  KC_P0,              /**/  KC_P1,              /**/  KC_P2,              /**/  KC_P3,              /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_P7,              /**/  KC_P8,              /**/  KC_P9,              /**/  KC_PMNS,            /**/  KC_TRNS,            /**/
+    /**/                      /**/  KC_TRNS,            /**/  KC_P4,              /**/  KC_P5,              /**/  KC_P6,              /**/  KC_PPLS,            /**/  KC_PENT,            /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_P1,              /**/  KC_P2,              /**/  KC_P3,              /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
+    /**/                      /**/                      /**/  KC_P0,              /**/  M(DBL_P0),          /**/  KC_PDOT,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
 
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/
     /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/
