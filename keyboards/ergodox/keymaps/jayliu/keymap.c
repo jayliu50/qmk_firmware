@@ -17,8 +17,49 @@ enum {
 
 // OS-specific keys
 #define SUPER KC_LGUI
+#define MOD(x) (LGUI(x))
+#define SMOD(x) (SCMD(x))
 
+// Sketch Layer
+#define ICON_ADD HYPR(DP_I)
+#define ICON_OUTLINE HYPR(DP_O)
+#define DISTR LCTL(LALT(DP_D))
+#define SWAP LCTL(LSFT(MOD(DP_L)))
+#define ARTB_PREV LSFT(MOD(DP_LBRC))
+#define ARTB_NEXT LSFT(MOD(DP_RBRC))
+#define RUNR_GO_TO HYPR(DP_G)
+#define RUNR_APPLY HYPR(DP_A)
+#define RUNR_CREATE HYPR(DP_C)
+#define RUNR_INSERT HYPR(DP_N)
+#define RUNR_RUN MOD(DP_QUOT)
+#define LYR_COLLAPSE HYPR(DP_S)
 
+#define ALGN_LEFT HYPR(KC_LEFT)
+#define ALGN_RIGHT HYPR(KC_RIGHT)
+#define ALGN_BOTT HYPR(KC_DOWN)
+#define ALGN_TOP HYPR(KC_UP)
+
+#define STYLE_CREATE MEH(DP_S)
+#define STYLE_COPY LALT(MOD(DP_C))
+#define STYLE_PASTE LALT(MOD(DP_V))
+
+#define POS_COPY LCTL(LSFT(DP_C))
+#define POS_PASTE LCTL(LSFT(DP_P))
+// resize artboard to fit
+// align to
+// copy position, size
+// copy styles
+// paste styles
+// user flows add connection
+// user flows create diagram
+// Zoom Artboard to Fit ( cmd+4 )
+// fluid
+// Bring ForwardAlt + Cmd + ↑
+// Bring to FrontControl + Alt + Cmd + ↑
+// Send BackwardAlt + Cmd + ↓
+// Sent to BackControl + Alt + Cmd + ↓
+// HideShift + Cmd + H
+// LockShift + Cmd + L
 
 /*======================================
 =            FN Definitions            =
@@ -26,10 +67,12 @@ enum {
 
 enum {
     JL_NUMB = 0,   // Tap toggle Number layer
+    JL_SKCH,       // Tap toggle Sketch layer
 };
 
 const uint16_t PROGMEM fn_actions[] = {
     [JL_NUMB] = ACTION_LAYER_TAP_TOGGLE(NUMB),
+    [JL_SKCH] = ACTION_LAYER_TAP_TOGGLE(SKCH),
 };
 
 /*=====  End of FN Definitions  ======*/
@@ -96,7 +139,7 @@ enum planck_keycodes {
 };
 
 // dummy function?
-void backlight_toggle() {}
+void backlight_toggle(void) {}
 
 #include "dynamic_macro.h"
 
@@ -117,7 +160,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 // Declarations
 enum {
-    JL_CP = 0         // Paste on single tap, Copy on double tap
+    JL_CP = 0,         // Paste on single tap, Copy on double tap
+    JL_ICON,        // Sketch: icon insert
 };
 
 static void copy_paste (qk_tap_dance_state_t *state, void *user_data) {
@@ -148,9 +192,8 @@ static void copy_paste (qk_tap_dance_state_t *state, void *user_data) {
 
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-
     [JL_CP]  = ACTION_TAP_DANCE_FN (copy_paste),
-
+    [JL_ICON] = ACTION_TAP_DANCE_DOUBLE(ICON_ADD, ICON_OUTLINE),
 };
 
 /*=====  End of Tap Dance Configuration  ======*/
@@ -174,7 +217,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /**/  KC_LCTL,            /**/  KC_HOME,            /**/  KC_WH_D,            /**/  KC_WH_U,            /**/  KC_END,             /**/                      /**/                      /**/
 
     /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_LALT,            /**/  MO(FKEY),           /**/
-    /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/  TG(SKCH),           /**/
+    /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/  F(JL_SKCH),           /**/
     /**/                      /**/                      /**/                      /**/                      /**/  KC_SPC,             /**/  KC_LGUI,            /**/  F(JL_NUMB),         /**/
 
 
@@ -204,11 +247,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
 
 
-    /**/  KC_MUTE,            /**/  KC_TRNS,            /**/  KC_F10,             /**/  KC_F11,             /**/  KC_F12,             /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
+    /**/  KC_MUTE,            /**/  KC_TRNS,            /**/  KC_F10,             /**/  KC_F11,             /**/  KC_F12,             /**/  KC_TRNS,            /**/  RESET,              /**/
     /**/  KC_VOLU,            /**/  KC_TRNS,            /**/  KC_F7,              /**/  KC_F8,              /**/  KC_F9,              /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/                      /**/  KC_TRNS,            /**/  KC_F4,              /**/  KC_F5,              /**/  KC_F6,              /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/  KC_VOLD,            /**/  KC_TRNS,            /**/  KC_F1,              /**/  KC_F2,              /**/  KC_F3,              /**/  KC_TRNS,            /**/  KC_CAPS,            /**/
-    /**/                      /**/                      /**/  KC_MPRV,            /**/  KC_TRNS,            /**/  KC_MNXT,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
+    /**/                      /**/                      /**/  KC_MPRV,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_MNXT,            /**/  KC_TRNS,            /**/
 
     /**/  TG(PLVR),           /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/
     /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/
@@ -310,16 +353,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/
     /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
 
+//  /**/  2'                  /**/  1' Goto             /**/  1 Reposition        /**/  2 Add               /**/  3 Style             /**/  4 Style Grab        /**/  5 Layer Mgmt        /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  SWAP,               /**/  TD(JL_ICON),        /**/  STYLE_PASTE,        /**/  STYLE_COPY,         /**/  KC_TRNS,            /**/
+    /**/                      /**/  RUNR_GO_TO,         /**/  DISTR,              /**/  RUNR_INSERT,        /**/  RUNR_APPLY,         /**/  STYLE_CREATE,       /**/  LYR_COLLAPSE,       /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  RUNR_CREATE,        /**/  POS_PASTE,          /**/  POS_COPY,           /**/  KC_TRNS,            /**/
+    /**/                      /**/                      /**/  ALGN_LEFT,          /**/  ALGN_BOTT,          /**/  ALGN_TOP,           /**/  ALGN_RIGHT,         /**/  KC_TRNS,            /**/
 
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/
-    /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS             /**/                      /**/                      /**/                      /**/                      /**/
+    /**/  ARTB_PREV,          /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/
+    /**/  ARTB_NEXT,          /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  RUNR_RUN            /**/                      /**/                      /**/                      /**/                      /**/
     ),
 
 
