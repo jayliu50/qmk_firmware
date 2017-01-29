@@ -247,25 +247,44 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #define JMP_WORD MEH(DP_SCLN)
 #define JMP_SELECT HYPR(DP_SCLN)
 
+#define BKMK_TOG MOD(KC_F2)
+#define BKMK_NEXT KC_F2
+#define BKMK_PREV LSFT(KC_F2)
+#define BKMK_CLEAR SMOD(KC_F2)
+
 #define STEP_IN KC_F11
 #define STEP_OVER KC_F10
 #define STEP_OUT LSFT(KC_F11)
+
+#define FILE_DUP HYPR(DP_D)
+#define FILE_REN HYPR(DP_R)
+
+#define SETTING_WDWP HYPR(DP_W) // doesn't work. just takes a screenshot I think. try meh instead
+
+#define SEL_SPLIT SMOD(DP_L)
+
+#define DEL_LINE LSFT(LCTL(DP_K))
+#define DEL_TO_EOL HYPR(DP_RBRC)
+#define DEL_TO_SOL HYPR(DP_LBRC)
+
+#define VIEW_PREV SMOD(DP_LBRC)
+#define VIEW_NEXT SMOD(DP_RBRC)
 
 
 [SUBL] = KEYMAP(
 //  /**/  5                   /**/  4                   /**/  3                   /**/  2                   /**/  1                   /**/  1'                  /**/  2'                  /**/
 //  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  // Basic
+    /**/  FILE_DUP,           /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  FILE_REN,           /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  // File
+    /**/  SEL_SPLIT,          /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  VIEW_PREV,          /**/  VIEW_NEXT,          /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  // Basic
     /**/  KC_TRNS,            /**/  JMP_IN_LINE,        /**/  JMP_CHAR,           /**/  JMP_LINE,           /**/  JMP_WORD,           /**/  JMP_SELECT,         /**/                      /**/  // Acejump
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  // Panel
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/                      /**/                      /**/  // MultiEditUtils
+    /**/  BKMK_CLEAR,         /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  BKMK_NEXT,          /**/  BKMK_PREV,          /**/  BKMK_TOG,           /**/  KC_TRNS,            /**/  // Bookmark
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  DEL_TO_SOL,         /**/  DEL_LINE,           /**/  DEL_TO_EOL,         /**/                      /**/                      /**/  // Deleting
     /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/
     /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
 
 //  /**/  2'                  /**/  1'                  /**/  1                   /**/  2                   /**/  3                   /**/  4                   /**/  5                   /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
+    /**/  KC_TRNS,            /**/  SETTING_WDWP,       /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
