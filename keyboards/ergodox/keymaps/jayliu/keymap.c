@@ -122,17 +122,27 @@ enum {
 
 static void copy_paste (qk_tap_dance_state_t *state, void *user_data) {
 
-    if (state->count == 1) {
-        register_code (SUPER);
-        register_code (DP_V);
-        unregister_code (DP_V);
-        unregister_code (SUPER);
-    } else {
-        register_code (SUPER);
-        register_code (DP_C);
-        unregister_code (DP_C);
-        unregister_code (SUPER);
-        reset_tap_dance (state);
+    switch (state->count) {
+        case 1:
+            register_code (SUPER);
+            register_code (DP_V);
+            unregister_code (DP_V);
+            unregister_code (SUPER);
+            break;
+        case 2:
+            register_code (SUPER);
+            register_code (DP_C);
+            unregister_code (DP_C);
+            unregister_code (SUPER);
+            break;
+        case 3:
+            register_code (SUPER);
+            register_code (DP_X);
+            unregister_code (DP_X);
+            unregister_code (SUPER);
+            reset_tap_dance (state);
+            break;
+
     }
 }
 
@@ -160,7 +170,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /**/  KC_1,               /**/  KC_2,               /**/  KC_3,               /**/  KC_4,               /**/  KC_5,               /**/  KC_6,               /**/  KC_BSLS,            /**/
     /**/  KC_GRV,             /**/  KC_Q,               /**/  KC_W,               /**/  KC_E,               /**/  KC_R,               /**/  KC_T,               /**/  MO(_DYN),           /**/
     /**/  KC_TAB,             /**/  KC_A,               /**/  KC_S,               /**/  KC_D,               /**/  KC_F,               /**/  KC_G,               /**/                      /**/
-    /**/  OSM(MOD_LSFT),      /**/  KC_Z,               /**/  KC_X,               /**/  KC_C,               /**/  KC_V,               /**/  KC_B,               /**/  TD(JL_CP),          /**/
+    /**/  OSM(MOD_LSFT),      /**/  KC_Z,               /**/  KC_X,               /**/  KC_C,               /**/  KC_V,               /**/  KC_B,               /**/  KC_DEL,             /**/
     /**/  KC_LCTL,            /**/  KC_HOME,            /**/  KC_WH_D,            /**/  KC_WH_U,            /**/  KC_END,             /**/                      /**/                      /**/
 
     /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_LALT,            /**/  MO(FKEY),           /**/
@@ -169,7 +179,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
     /**/  KC_RBRC,            /**/  KC_7,               /**/  KC_8,               /**/  KC_9,               /**/  KC_0,               /**/  KC_MINS,            /**/  KC_EQL,             /**/
-    /**/  KC_DEL,             /**/  KC_Y,               /**/  KC_U,               /**/  KC_I,               /**/  KC_O,               /**/  KC_P,               /**/  KC_LBRC,            /**/
+    /**/  TD(JL_CP),          /**/  KC_Y,               /**/  KC_U,               /**/  KC_I,               /**/  KC_O,               /**/  KC_P,               /**/  KC_LBRC,            /**/
     /**/                      /**/  KC_H,               /**/  KC_J,               /**/  KC_K,               /**/  KC_L,               /**/  KC_SCLN,            /**/  KC_QUOT,            /**/
     /**/  KC_ENT,             /**/  KC_N,               /**/  KC_M,               /**/  KC_COMM,            /**/  KC_DOT,             /**/  KC_SLSH,            /**/  OSM(MOD_RSFT),      /**/
     /**/                      /**/                      /**/  KC_LEFT,            /**/  KC_DOWN,            /**/  KC_UP,              /**/  KC_RGHT,            /**/  KC_RCTL,            /**/
