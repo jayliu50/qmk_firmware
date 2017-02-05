@@ -32,7 +32,6 @@ enum {
 #define RUNR_CREATE HYPR(DP_C)
 #define RUNR_INSERT HYPR(DP_N)
 #define RUNR_RUN MOD(DP_QUOT)
-#define LYR_COLLAPSE HYPR(DP_S)
 
 #define ALGN_LEFT HYPR(KC_LEFT)
 #define ALGN_RIGHT HYPR(KC_RIGHT)
@@ -45,21 +44,22 @@ enum {
 
 #define POS_COPY LCTL(LSFT(DP_C))
 #define POS_PASTE LCTL(LSFT(DP_P))
+
+#define TOG_HIDE LSFT(MOD(DP_H))
+#define TOG_LOCK LSFT(MOD(DP_L))
+#define LAYER_FRONT LCTL(LALT(MOD(KC_UP)))
+#define LAYER_BACK LCTL(LALT(MOD(KC_DOWN)))
+#define LAYER_FORWARD LALT(MOD(KC_UP))
+#define LAYER_BACKWARD LALT(MOD(KC_DOWN))
+#define LAYER_COLLAPSE HYPR(DP_S)
+#define LAYER_REVEAL LSFT(MOD(DP_J))
+
 // resize artboard to fit
 // align to
-// copy position, size
-// copy styles
-// paste styles
 // user flows add connection
 // user flows create diagram
 // Zoom Artboard to Fit ( cmd+4 )
 // fluid
-// Bring ForwardAlt + Cmd + ↑
-// Bring to FrontControl + Alt + Cmd + ↑
-// Send BackwardAlt + Cmd + ↓
-// Sent to BackControl + Alt + Cmd + ↓
-// HideShift + Cmd + H
-// LockShift + Cmd + L
 
 /*======================================
 =            FN Definitions            =
@@ -162,6 +162,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 enum {
     JL_CP = 0,         // Paste on single tap, Copy on double tap
     JL_ICON,        // Sketch: icon insert
+    JL_LAYER_LIST
 };
 
 static void copy_paste (qk_tap_dance_state_t *state, void *user_data) {
@@ -194,6 +195,7 @@ static void copy_paste (qk_tap_dance_state_t *state, void *user_data) {
 qk_tap_dance_action_t tap_dance_actions[] = {
     [JL_CP]  = ACTION_TAP_DANCE_FN (copy_paste),
     [JL_ICON] = ACTION_TAP_DANCE_DOUBLE(ICON_ADD, ICON_OUTLINE),
+    [JL_LAYER_LIST] = ACTION_TAP_DANCE_DOUBLE(LAYER_COLLAPSE, LAYER_REVEAL),
 };
 
 /*=====  End of Tap Dance Configuration  ======*/
@@ -217,7 +219,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /**/  KC_LCTL,            /**/  KC_HOME,            /**/  KC_WH_D,            /**/  KC_WH_U,            /**/  KC_END,             /**/                      /**/                      /**/
 
     /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_LALT,            /**/  MO(FKEY),           /**/
-    /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/  F(JL_SKCH),           /**/
+    /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/  F(JL_SKCH),         /**/
     /**/                      /**/                      /**/                      /**/                      /**/  KC_SPC,             /**/  KC_LGUI,            /**/  F(JL_NUMB),         /**/
 
 
@@ -353,16 +355,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/
     /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
 
-//  /**/  2'                  /**/  1' Goto             /**/  1 Reposition        /**/  2 Add               /**/  3 Style             /**/  4 Style Grab        /**/  5 Layer Mgmt        /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  SWAP,               /**/  TD(JL_ICON),        /**/  STYLE_PASTE,        /**/  STYLE_COPY,         /**/  KC_TRNS,            /**/
-    /**/                      /**/  RUNR_GO_TO,         /**/  DISTR,              /**/  RUNR_INSERT,        /**/  RUNR_APPLY,         /**/  STYLE_CREATE,       /**/  LYR_COLLAPSE,       /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  RUNR_CREATE,        /**/  POS_PASTE,          /**/  POS_COPY,           /**/  KC_TRNS,            /**/
-    /**/                      /**/                      /**/  ALGN_LEFT,          /**/  ALGN_BOTT,          /**/  ALGN_TOP,           /**/  ALGN_RIGHT,         /**/  KC_TRNS,            /**/
+//  /**/  2'                  /**/  1' Reposition       /**/  1 Editing           /**/  2 Add               /**/  3 Style             /**/  4 Style Grab        /**/  5 Layer Mgmt        /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  LAYER_FORWARD,      /**/
+    /**/  KC_TRNS,            /**/  SWAP,               /**/  TOG_LOCK,           /**/  TD(JL_ICON),        /**/  STYLE_PASTE,        /**/  STYLE_COPY,         /**/  LAYER_FRONT,        /**/
+    /**/                      /**/  DISTR,              /**/  TOG_HIDE,           /**/  RUNR_INSERT,        /**/  RUNR_APPLY,         /**/  STYLE_CREATE,       /**/  TD(JL_LAYER_LIST),  /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  RUNR_CREATE,        /**/  POS_PASTE,          /**/  POS_COPY,           /**/  LAYER_BACK,         /**/
+    /**/                      /**/                      /**/  ALGN_LEFT,          /**/  ALGN_BOTT,          /**/  ALGN_TOP,           /**/  ALGN_RIGHT,         /**/  LAYER_BACKWARD,     /**/
 
     /**/  ARTB_PREV,          /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/
     /**/  ARTB_NEXT,          /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  RUNR_RUN            /**/                      /**/                      /**/                      /**/                      /**/
+    /**/  KC_TRNS,            /**/  RUNR_RUN,           /**/  RUNR_GO_TO          /**/                      /**/                      /**/                      /**/                      /**/
     ),
 
 
@@ -400,7 +402,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /**/  KC_NO,              /**/  KC_A,               /**/  KC_S,               /**/  KC_D,               /**/  KC_F,               /**/  KC_G,               /**/  KC_NO,              /**/
     /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/                      /**/                      /**/
 
-    /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_NO,              /**/  (KC_TRNS),            /**/
+    /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_NO,              /**/  (KC_TRNS),          /**/
     /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/  M(PLVR_DICT),       /**/
     /**/                      /**/                      /**/                      /**/                      /**/  KC_C,               /**/  KC_V,               /**/  MAGIC_TOGGLE_NKRO,  /**/
 
