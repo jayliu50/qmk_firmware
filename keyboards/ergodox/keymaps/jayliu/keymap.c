@@ -7,6 +7,7 @@
 // Layer definitions
 enum {
     BASE = 0,   // default layer
+    PRDV,       // Programmer Dvorak (no numbers, though), Windows-style modifiers
     FKEY,       // Function keys, media
     NUMB,       // number keys
     SUBL,       // Sublime Text
@@ -162,7 +163,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 enum {
     JL_CP = 0,         // Paste on single tap, Copy on double tap
     JL_ICON,        // Sketch: icon insert
-    JL_LAYER_LIST
+    JL_LAYER_LIST,
+
+    PRDV_AMPR, // programmer dvorak special keys
+    PRDV_DLR,
+    PRDV_BSLS,
+    PRDV_AT,
+    PRDV_HASH,
+    PRDV_SLASH,
+    PRDV_MINS,
 };
 
 static void copy_paste (qk_tap_dance_state_t *state, void *user_data) {
@@ -196,6 +205,14 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [JL_CP]  = ACTION_TAP_DANCE_FN (copy_paste),
     [JL_ICON] = ACTION_TAP_DANCE_DOUBLE(ICON_ADD, ICON_OUTLINE),
     [JL_LAYER_LIST] = ACTION_TAP_DANCE_DOUBLE(LAYER_COLLAPSE, LAYER_REVEAL),
+
+    [PRDV_AMPR] = ACTION_TAP_DANCE_DOUBLE(KC_AMPR, KC_PERC),
+    [PRDV_DLR] = ACTION_TAP_DANCE_DOUBLE(KC_DLR, KC_TILD),
+    [PRDV_BSLS] = ACTION_TAP_DANCE_DOUBLE(KC_BSLS, LSFT(KC_BSLS)),
+    [PRDV_AT] = ACTION_TAP_DANCE_DOUBLE(KC_AT, KC_CIRC),
+    [PRDV_HASH] = ACTION_TAP_DANCE_DOUBLE(KC_HASH, KC_GRV),
+    [PRDV_SLASH] = ACTION_TAP_DANCE_DOUBLE(KC_SLASH, LSFT(KC_SLASH)),
+    [PRDV_MINS] = ACTION_TAP_DANCE_DOUBLE(KC_MINS, LSFT(KC_MINS)),
 };
 
 /*=====  End of Tap Dance Configuration  ======*/
@@ -234,6 +251,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /**/  LT(SUBL, KC_ESC),   /**/  KC_RGUI,            /**/  KC_BSPC             /**/                      /**/                      /**/                      /**/                      /**/
     ),
 
+
+[PRDV] = KEYMAP(
+//  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/
+    /**/  TD(PRDV_AMPR),      /**/  KC_LBRC,            /**/  KC_LCBR,            /**/  KC_RCBR,            /**/  KC_LPRN,            /**/  KC_EQL,             /**/  TD(PRDV_BSLS),      /**/
+    /**/  TD(PRDV_DLR),       /**/  KC_SCLN,            /**/  KC_COMM,            /**/  KC_DOT,             /**/  KC_P,               /**/  KC_Y,               /**/  KC_TRNS,            /**/
+    /**/  KC_TRNS,            /**/  KC_A,               /**/  KC_O,               /**/  KC_E,               /**/  KC_U,               /**/  KC_I,               /**/                      /**/
+    /**/  KC_TRNS,            /**/  KC_QUOTE,           /**/  KC_Q,               /**/  KC_J,               /**/  KC_K,               /**/  KC_X,               /**/  KC_TRNS,            /**/
+    /**/  KC_LGUI,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/                      /**/                      /**/
+
+    /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
+    /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/
+    /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_LCTL,            /**/  KC_TRNS,            /**/
+
+
+    /**/  TD(PRDV_AT),        /**/  KC_ASTR,            /**/  KC_RPRN,            /**/  KC_PLUS,            /**/  KC_RBRC,            /**/  KC_EXLM,            /**/  TD(PRDV_HASH),      /**/
+    /**/  KC_TRNS,            /**/  KC_F,               /**/  KC_G,               /**/  KC_C,               /**/  KC_R,               /**/  KC_L,               /**/  TD(PRDV_SLASH),        /**/
+    /**/                      /**/  KC_D,               /**/  KC_H,               /**/  KC_T,               /**/  KC_N,               /**/  KC_S,               /**/  TD(PRDV_MINS),      /**/
+    /**/  KC_TRNS,            /**/  KC_B,               /**/  KC_M,               /**/  KC_W,               /**/  KC_V,               /**/  KC_Z,               /**/  KC_TRNS,            /**/
+    /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_RGUI,            /**/
+
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/
+    /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/
+    /**/  (KC_TRNS),          /**/  KC_RCTL,            /**/  KC_TRNS             /**/                      /**/                      /**/                      /**/                      /**/
+    ),
 
 
 [FKEY] = KEYMAP(
@@ -283,8 +324,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/
     /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS             /**/                      /**/                      /**/                      /**/                      /**/
+    /**/  TG(PRDV),           /**/  KC_TRNS,            /**/  KC_TRNS             /**/                      /**/                      /**/                      /**/                      /**/
     ),
+
+
 
 #define JMP_CHAR MEH(DP_QUOT)
 #define JMP_IN_LINE HYPR(DP_COMM)
@@ -418,6 +461,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /**/  (KC_TRNS),          /**/  KC_N,               /**/  KC_M                /**/                      /**/                      /**/                      /**/                      /**/
     ),
 
+
 }; // end of keymap definitions
 
 
@@ -449,6 +493,10 @@ void matrix_scan_user(void) {
             break;
         case SKCH:
             ergodox_right_led_1_on();
+            break;
+        case PRDV:
+            ergodox_right_led_1_on();
+            ergodox_right_led_2_on();
             break;
         case PLVR:
             ergodox_right_led_1_on();
