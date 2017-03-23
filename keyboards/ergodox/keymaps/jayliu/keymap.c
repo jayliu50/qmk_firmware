@@ -213,7 +213,8 @@ static void copy_paste (qk_tap_dance_state_t *state, void *user_data) {
 qk_tap_dance_action_t tap_dance_actions[] = {
     [JL_CP]  = ACTION_TAP_DANCE_FN (copy_paste),
     [JL_ICON] = ACTION_TAP_DANCE_DOUBLE(ICON_ADD, ICON_OUTLINE),
-    [JL_LAYER_LIST] = ACTION_TAP_DANCE_DOUBLE(LAYER_COLLAPSE, LAYER_REVEAL),
+    [JL_LAYER_LIST] = ACTION_TAP_DANCE_DOUBLE(LAYER_REVEAL, LAYER_COLLAPSE),
+    [JL_SYMBOL] = ACTION_TAP_DANCE_DOUBLE(RUNR_INSERT, RUNR_CREATE),
 
     [PRDV_AMPR] = ACTION_TAP_DANCE_DOUBLE(KC_AMPR, KC_PERC),
     [PRDV_DLR] = ACTION_TAP_DANCE_DOUBLE(KC_DLR, KC_TILD),
@@ -410,8 +411,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  /**/  2'                  /**/  1' Reposition       /**/  1 Editing           /**/  2 Add               /**/  3 Style             /**/  4 Style Grab        /**/  5 Layer Mgmt        /**/
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  LAYER_FORWARD,      /**/
     /**/  KC_TRNS,            /**/  SWAP,               /**/  TOG_LOCK,           /**/  TD(JL_ICON),        /**/  STYLE_PASTE,        /**/  STYLE_COPY,         /**/  LAYER_FRONT,        /**/
-    /**/                      /**/  DISTR,              /**/  TOG_HIDE,           /**/  RUNR_INSERT,        /**/  RUNR_APPLY,         /**/  STYLE_CREATE,       /**/  TD(JL_LAYER_LIST),  /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  RUNR_CREATE,        /**/  POS_PASTE,          /**/  POS_COPY,           /**/  LAYER_BACK,         /**/
+    /**/                      /**/  DISTR,              /**/  TOG_HIDE,           /**/  TD(JL_SYMBOL),      /**/  RUNR_APPLY,         /**/  STYLE_CREATE,       /**/  TD(JL_LAYER_LIST),  /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  POS_PASTE,          /**/  POS_COPY,           /**/  LAYER_BACK,         /**/
     /**/                      /**/                      /**/  ALGN_LEFT,          /**/  ALGN_BOTT,          /**/  ALGN_TOP,           /**/  ALGN_RIGHT,         /**/  LAYER_BACKWARD,     /**/
 
     /**/  ARTB_PREV,          /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/
