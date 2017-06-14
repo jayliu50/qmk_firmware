@@ -5,7 +5,9 @@
 #define MOUSEKEY_DELAY          0
 #define MOUSEKEY_TIME_TO_MAX    5
 #define MOUSEKEY_MAX_SPEED      2
-#define MOUSEKEY_WHEEL_DELAY    0
+// #define MOUSEKEY_WHEEL_DELAY    100 // doesn't actually do anything?
+#define MOUSEKEY_WHEEL_MAX_SPEED    2
+#define MOUSEKEY_WHEEL_TIME_TO_MAX  1000
 
 #define TAPPING_TOGGLE  1
 
