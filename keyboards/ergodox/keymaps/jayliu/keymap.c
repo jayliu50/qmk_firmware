@@ -230,6 +230,19 @@ enum {
     SUBL_SEL_LI,      // Single: select line, Double: select indent
     SUBL_SEL_BT,      // Single: select bracket, Double: select tag
     SUBL_FILE_RD,     // Single: rename file, Double: duplicate file
+
+    NUM_7_LT,         // Programmer Dvorak Numbers
+    NUM_5_LBRC,
+    NUM_3_LCBR,
+    NUM_1_LPRN,
+    NUM_9_EQL,
+
+    NUM_0_GT,
+    NUM_2_RPRN,
+    NUM_4_RCBR,
+    NUM_6_RBRC,
+    NUM_8_EXLM,
+
 };
 
 static void copy_paste (qk_tap_dance_state_t *state, void *user_data) {
@@ -272,6 +285,19 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [SUBL_SEL_LI] = ACTION_TAP_DANCE_DOUBLE(SEL_LINE, SEL_IND),
     [SUBL_SEL_BT] = ACTION_TAP_DANCE_DOUBLE(SEL_BRC, SEL_TAG),
     [SUBL_FILE_RD] =  ACTION_TAP_DANCE_DOUBLE(FILE_REN, FILE_DUP),
+
+    [NUM_7_LT] = ACTION_TAP_DANCE_DOUBLE(KC_LT, KC_7),
+    [NUM_5_LBRC] = ACTION_TAP_DANCE_DOUBLE(KC_LBRC, KC_5),
+    [NUM_3_LCBR] = ACTION_TAP_DANCE_DOUBLE(KC_LCBR, KC_3),
+    [NUM_1_LPRN] = ACTION_TAP_DANCE_DOUBLE(KC_LPRN, KC_1),
+    [NUM_9_EQL] = ACTION_TAP_DANCE_DOUBLE(KC_EQL, KC_9),
+
+    [NUM_0_GT] = ACTION_TAP_DANCE_DOUBLE(KC_GT, KC_0),
+    [NUM_2_RPRN] = ACTION_TAP_DANCE_DOUBLE(KC_RPRN, KC_2),
+    [NUM_4_RCBR] = ACTION_TAP_DANCE_DOUBLE(KC_RCBR, KC_4),
+    [NUM_6_RBRC] = ACTION_TAP_DANCE_DOUBLE(KC_RBRC, KC_6),
+    [NUM_8_EXLM] = ACTION_TAP_DANCE_DOUBLE(KC_EXLM, KC_8),
+
 };
 
 /*=====  End of Tap Dance Configuration  ======*/
@@ -288,7 +314,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [BASE] = KEYMAP(
 //  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/
-    /**/  KC_TRNS,            /**/  KC_LT,              /**/  KC_LBRC,            /**/  KC_LCBR,            /**/  KC_LPRN,            /**/  KC_EQL,             /**/  KC_TRNS,            /**/
+    /**/  KC_TRNS,            /**/  TD(NUM_7_LT),       /**/  TD(NUM_5_LBRC),     /**/  TD(NUM_3_LCBR),     /**/  TD(NUM_1_LPRN),     /**/  TD(NUM_9_EQL),      /**/  KC_TRNS,            /**/
     /**/  KC_TRNS,            /**/  KC_SCLN,            /**/  KC_COMM,            /**/  KC_DOT,             /**/  KC_P,               /**/  KC_Y,               /**/  MO(SYMB),           /**/
     /**/  KC_TAB,             /**/  KC_A,               /**/  KC_O,               /**/  KC_E,               /**/  KC_U,               /**/  KC_I,               /**/                      /**/
     /**/  KC_LSFT,            /**/  KC_QUOT,            /**/  KC_Q,               /**/  KC_J,               /**/  KC_K,               /**/  KC_X,               /**/  KC_DEL,             /**/
@@ -299,7 +325,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /**/                      /**/                      /**/                      /**/                      /**/  KC_SPC,             /**/  KC_LGUI,            /**/  MO(_DYN),           /**/
 
 
-    /**/  TD(JL_CP),          /**/  KC_GT,              /**/  KC_RPRN,            /**/  KC_RCBR,            /**/  KC_RBRC,            /**/  KC_EXLM,            /**/  KC_TRNS,            /**/
+    /**/  TD(JL_CP),          /**/  TD(NUM_0_GT),       /**/  TD(NUM_2_RPRN),     /**/  TD(NUM_4_RCBR),     /**/  TD(NUM_6_RBRC),     /**/  TD(NUM_8_EXLM),     /**/  KC_TRNS,            /**/
     /**/  MO(SYMB),           /**/  KC_F,               /**/  KC_G,               /**/  KC_C,               /**/  KC_R,               /**/  KC_L,               /**/  KC_SLSH,            /**/
     /**/                      /**/  KC_D,               /**/  KC_H,               /**/  KC_T,               /**/  KC_N,               /**/  KC_S,               /**/  KC_MINS,            /**/
     /**/  KC_ENT,             /**/  KC_B,               /**/  KC_M,               /**/  KC_W,               /**/  KC_V,               /**/  KC_Z,               /**/  KC_RSFT,            /**/
