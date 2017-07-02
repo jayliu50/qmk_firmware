@@ -3,6 +3,7 @@
 #include "action_layer.h"
 #include "version.h"
 #include "keymap_dvp.h"
+#include "personal.h"
 
 // Layer definitions
 enum {
@@ -139,6 +140,16 @@ enum {
   PLVR_DICT,        // Plover dictionary
   DBL_P0,           // 00
   CLEAR_MODS,       // Sends up key on all mods
+
+  WORK_ID,
+  WORK_USER,
+  WORK_EMAIL,
+  WORK_PH,
+  PER_ID,
+  PER_USER,
+  PER_PH,
+  PER_EMAIL,
+
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
@@ -168,6 +179,54 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
         if (record->event.pressed) {
             // sometimes QMK will send a stuck mod keypress. This hopefully clears them.
             return MACRO( U(LCTL), U(LSFT), U(LALT), U(LGUI), U(RCTL), U(RSFT), U(RALT), U(RGUI), END );
+        }
+    }
+    case WORK_ID: {
+        if (record->event.pressed) {
+            SEND_STRING(_WORK_ID);
+            return false;
+        }
+    }
+    case WORK_USER: {
+        if (record->event.pressed) {
+            SEND_STRING(_WORK_USER);
+            return false;
+        }
+    }
+    case WORK_EMAIL: {
+        if (record->event.pressed) {
+            SEND_STRING(_WORK_EMAIL);
+            return false;
+        }
+    }
+    case WORK_PH: {
+        if (record->event.pressed) {
+            SEND_STRING(_WORK_PHONE);
+            return false;
+        }
+    }
+    case PER_ID: {
+        if (record->event.pressed) {
+            SEND_STRING(_PER_ID);
+            return false;
+        }
+    }
+    case PER_USER: {
+        if (record->event.pressed) {
+            SEND_STRING(_PER_USER);
+            return false;
+        }
+    }
+    case PER_PH: {
+        if (record->event.pressed) {
+            SEND_STRING(_PER_PHONE);
+            return false;
+        }
+    }
+    case PER_EMAIL: {
+        if (record->event.pressed) {
+            SEND_STRING(_PER_EMAIL);
+            return false;
         }
     }
 
@@ -511,15 +570,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_DYN] = KEYMAP(
 //  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  DYN_REC_START1,     /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/                      /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  DYN_MACRO_PLAY1,    /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  M(PER_ID),          /**/  M(WORK_ID),         /**/  KC_TRNS,            /**/  DYN_REC_START1,     /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  M(PER_EMAIL),       /**/  M(WORK_EMAIL),      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  M(PER_USER),        /**/  M(WORK_USER),       /**/  KC_TRNS,            /**/                      /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  M(PER_PH),          /**/  M(WORK_PH),         /**/  KC_TRNS,            /**/  DYN_MACRO_PLAY1,    /**/
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/                      /**/                      /**/
 
     /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/
-    /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  (KC_TRNS),            /**/
+    /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  (KC_TRNS),          /**/
 
 
     /**/  DYN_REC_START2,     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
