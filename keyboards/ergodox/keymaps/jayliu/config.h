@@ -24,8 +24,7 @@
 
 /* key combination for command */
 #define IS_COMMAND() ( \
-    keyboard_report->mods == (MOD_BIT(KC_LCTL) | MOD_BIT(KC_RCTL)) || \
-    keyboard_report->mods == (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT)) \
+    keyboard_report->mods == (MOD_BIT(KC_LCTL) | MOD_BIT(KC_RCTL) | MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT)) \
 )
 
 #ifdef SUBPROJECT_ez
