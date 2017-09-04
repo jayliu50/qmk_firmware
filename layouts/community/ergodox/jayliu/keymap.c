@@ -20,8 +20,8 @@ enum {
 
 // OS-specific keys
 #define SUPER KC_LGUI
-#define MOD(x) (LGUI(x))
-#define SMOD(x) (SCMD(x))
+#define MOD(x) (LGUI(x)) // CMD in OSX
+#define SMOD(x) (SCMD(x)) // SHIFT CMD in OSX
 
 #define SCRN_SHOT LCTL(LSFT(MOD(KC_4)))
 #define SCRN_SAVE LCTL(LSFT(KC_4))
@@ -75,7 +75,7 @@ enum {
 #define JMP_LINE MEH(KC_DOT)
 #define JMP_IN_LINE HYPR(KC_COMM)
 #define JMP_SELECT HYPR(KC_SCLN)
-#define JMP_AFTER HYPR(KC_DOT)
+#define JMP_ADD_CURSOR HYPR(KC_QUOT)
 
 #define BKMK_TOG MOD(KC_F2)
 #define BKMK_NEXT KC_F2
@@ -107,8 +107,13 @@ enum {
 #define SEL_BRC LSFT(LCTL(KC_M))
 
 #define SEL_SPLIT SMOD(KC_L)
-// todo: add preserve case here
-// todo: be able to jump to the other braket here
+#define SEL_SPLIT_CHAR LALT(MOD(KC_COMM))
+#define FILE_OPEN_REC LALT(SMOD(KC_T))
+#define MATCH_BRACE MOD(KC_M)
+#define MATCH_BRACE_SEL SMOD(KC_M)
+#define PRESERVE_CASE HYPR(KC_P)
+#define CRSR_BACK LCTL(KC_MINS)
+#define CRSR_FWD LSFT(LCTL(KC_MINS))
 // origami: cmd+k, shift arrow to jump to, cmd to create to, shift+cmd to destroy "to"
 
 
@@ -290,18 +295,8 @@ enum {
     SUBL_SEL_LI,      // Single: select line, Double: select indent
     SUBL_SEL_BT,      // Single: select bracket, Double: select tag
     SUBL_FILE_RD,     // Single: rename file, Double: duplicate file
-
-    NUM_7_LT,         // Programmer Dvorak Numbers
-    NUM_5_LBRC,
-    NUM_3_LCBR,
-    NUM_1_LPRN,
-    NUM_9_EQL,
-
-    NUM_0_GT,
-    NUM_2_RPRN,
-    NUM_4_RCBR,
-    NUM_6_RBRC,
-    NUM_8_EXLM,
+    SUBL_BRACES,      // Single: go to matching brace, Double: select to matching brace
+    SUBL_SPLIT,       // Single: split lines, Double: split lines by regex
 
 };
 
@@ -345,6 +340,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [SUBL_SEL_LI] = ACTION_TAP_DANCE_DOUBLE(SEL_LINE, SEL_IND),
     [SUBL_SEL_BT] = ACTION_TAP_DANCE_DOUBLE(SEL_BRC, SEL_TAG),
     [SUBL_FILE_RD] =  ACTION_TAP_DANCE_DOUBLE(FILE_REN, FILE_DUP),
+    [SUBL_BRACES] = ACTION_TAP_DANCE_DOUBLE(MATCH_BRACE, MATCH_BRACE_SEL),
+    [SUBL_SPLIT] = ACTION_TAP_DANCE_DOUBLE(SEL_SPLIT, SEL_SPLIT_CHAR),
 
 };
 
@@ -373,15 +370,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /**/                      /**/                      /**/                      /**/                      /**/  KC_SPC,             /**/  KC_LGUI,            /**/  MO(_DYN),           /**/
 
 
-    /**/  TD(JL_CP),          /**/  KC_GT,              /**/  KC_RPRN,            /**/  KC_RCBR,            /**/  KC_RBRC,            /**/  KC_EXLM,            /**/  KC_TRNS,            /**/
-    /**/  MO(SYMB),           /**/  KC_F,               /**/  KC_G,               /**/  KC_C,               /**/  KC_R,               /**/  KC_L,               /**/  KC_SLSH,            /**/
-    /**/                      /**/  KC_D,               /**/  KC_H,               /**/  KC_T,               /**/  KC_N,               /**/  KC_S,               /**/  KC_MINS,            /**/
-    /**/  KC_TRNS,            /**/  KC_B,               /**/  KC_M,               /**/  KC_W,               /**/  KC_V,               /**/  KC_Z,               /**/  KC_RSFT,            /**/
-    /**/                      /**/                      /**/  KC_LEFT,            /**/  KC_DOWN,            /**/  KC_UP,              /**/  KC_RGHT,            /**/  KC_SPC,             /**/
+    /**/  TD(JL_CP),          /**/  KC_GT,              /**/  KC_RPRN,            /**/  KC_RCBR,               /**/  KC_RBRC,            /**/  KC_EXLM,            /**/  KC_TRNS,            /**/
+    /**/  LT(SYMB, KC_PGUP),  /**/  KC_F,               /**/  KC_G,               /**/  KC_C,                  /**/  KC_R,               /**/  KC_L,               /**/  KC_SLSH,            /**/
+    /**/                      /**/  KC_D,               /**/  KC_H,               /**/  KC_T,                  /**/  KC_N,               /**/  KC_S,               /**/  KC_MINS,            /**/
+    /**/  KC_PGDN,            /**/  KC_B,               /**/  KC_M,               /**/  KC_W,                  /**/  KC_V,               /**/  KC_Z,               /**/  KC_RSFT,            /**/
+    /**/                      /**/                      /**/  KC_LEFT,            /**/  KC_DOWN,               /**/  KC_UP,              /**/  KC_RGHT,            /**/  KC_SPC,             /**/
 
-    /**/  KC_PGUP,            /**/  KC_RALT,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/
-    /**/  KC_PGDN,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/
-    /**/  KC_ESC,             /**/  KC_RGUI,            /**/  KC_BSPC             /**/                      /**/                      /**/                      /**/                      /**/
+    /**/  KC_TRNS,            /**/  KC_RALT,            /**/                      /**/                         /**/                      /**/                      /**/                      /**/
+    /**/  KC_TRNS,            /**/                      /**/                      /**/                         /**/                      /**/                      /**/                      /**/
+    /**/  KC_TRNS,            /**/  KC_RGUI,            /**/  KC_BSPC             /**/                         /**/                      /**/                      /**/                      /**/
     ),
 
 
@@ -442,13 +439,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
     /**/  TD(JL_SCRN),        /**/  KC_TRNS,            /**/  KC_F10,             /**/  KC_F11,                /**/  KC_F12,             /**/  KC_TRNS,            /**/  RESET,              /**/
-    /**/  KC_MPLY,            /**/  KC_TRNS,            /**/  KC_F7,              /**/  KC_F8,                 /**/  KC_F9,              /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
+    /**/  KC_MS_WH_DOWN,      /**/  KC_TRNS,            /**/  KC_F7,              /**/  KC_F8,                 /**/  KC_F9,              /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/                      /**/  KC_TRNS,            /**/  KC_F4,              /**/  KC_F5,                 /**/  KC_F6,              /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_F1,              /**/  KC_F2,                 /**/  KC_F3,              /**/  KC_TRNS,            /**/  KC_CAPS,            /**/
+    /**/  KC_MS_WH_UP,        /**/  KC_TRNS,            /**/  KC_F1,              /**/  KC_F2,                 /**/  KC_F3,              /**/  KC_TRNS,            /**/  KC_CAPS,            /**/
     /**/                      /**/                      /**/  KC_MS_LEFT,         /**/  KC_MS_DOWN,            /**/  KC_MS_UP,           /**/  KC_MS_RIGHT,        /**/  KC_TRNS,            /**/
 
-    /**/  KC_MS_WH_DOWN,      /**/  KC_TRNS,            /**/                      /**/                         /**/                      /**/                      /**/                      /**/
-    /**/  KC_MS_WH_UP,        /**/                      /**/                      /**/                         /**/                      /**/                      /**/                      /**/
+    /**/  KC_MPLY,            /**/  KC_MS_BTN3,         /**/                      /**/                         /**/                      /**/                      /**/                      /**/
+    /**/  KC_TRNS,            /**/                      /**/                      /**/                         /**/                      /**/                      /**/                      /**/
     /**/  M(CLEAR_MODS),      /**/  KC_MS_BTN2,         /**/  KC_MS_BTN1          /**/                         /**/                      /**/                      /**/                      /**/
     ),
 
@@ -481,27 +478,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 [SUBL] = KEYMAP(
-//  /**/  5                   /**/  4                   /**/  3                   /**/  2                   /**/  1                   /**/  1'                  /**/  2'                  /**/
-//  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/                      /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/                      /**/                      /**/
-    /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/
-    /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
+//  /**/  5                   /**/  4                   /**/  3                   /**/  2                   /**/  1                   /**/  1'                  /**/  2'                    /**/
+//  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------    /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,              /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,              /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/                        /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,              /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/                      /**/                        /**/
+    /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,              /**/
+    /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,              /**/
+    /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,              /**/
 
-//  /**/  2'                  /**/  1'                  /**/  1                   /**/  2                   /**/  3                   /**/  4                   /**/  5                   /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  SETTING_WDWP,       /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/  KC_TRNS,            /**/  JMP_IN_LINE,        /**/  JMP_LINE,           /**/  TD(SUBL_SEL_LI),    /**/  SEL_SPLIT,          /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/                      /**/  JMP_SELECT,         /**/  JMP_WORD,           /**/  TD(SUBL_SEL_WQ),    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  TD(SUBL_FILE_RD),   /**/
-    /**/  KC_TRNS,            /**/  JMP_AFTER,          /**/  JMP_CHAR,           /**/  TD(SUBL_SEL_BT),    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
+//  /**/  2'                  /**/  1'                  /**/  1                   /**/  2                   /**/  3                   /**/  4                   /**/  5                     /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  SETTING_WDWP,       /**/  TD(SUBL_SEL_BT),    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,              /**/
+    /**/  CRSR_BACK,          /**/  JMP_IN_LINE,        /**/  JMP_LINE,           /**/  TD(SUBL_SEL_LI),    /**/  JMP_ADD_CURSOR,     /**/  KC_TRNS,            /**/  TD(SUBL_FILE_RD),     /**/
+    /**/                      /**/  JMP_SELECT,         /**/  JMP_CHAR,           /**/  TD(SUBL_BRACES),    /**/  TD(SUBL_SPLIT),     /**/  PRESERVE_CASE,      /**/  FILE_OPEN_REC,        /**/
+    /**/  CRSR_FWD,           /**/  KC_TRNS,            /**/  JMP_WORD,           /**/  TD(SUBL_SEL_WQ),    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,              /**/
+    /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,              /**/
 
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/
-    /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  COM_PAL             /**/                      /**/                      /**/                      /**/                      /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                        /**/
+    /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/                        /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  COM_PAL             /**/                      /**/                      /**/                      /**/                        /**/
     ),
 
 
@@ -521,13 +518,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 //  /**/  2'                  /**/  1' Reposition       /**/  1 Editing           /**/  2 Add               /**/  3 Style             /**/  4 Style Grab        /**/  5 Layer Mgmt          /**/
     /**/  TD(JL_SCRN),        /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  LAYER_FORWARD,        /**/
-    /**/  KC_TRNS,            /**/  SWAP,               /**/  TOG_LOCK,           /**/  TD(SKCH_ICON),      /**/  STYLE_PASTE,        /**/  STYLE_COPY,         /**/  LAYER_FRONT,          /**/
+    /**/  ARTB_PREV,          /**/  SWAP,               /**/  TOG_LOCK,           /**/  TD(SKCH_ICON),      /**/  STYLE_PASTE,        /**/  STYLE_COPY,         /**/  LAYER_FRONT,          /**/
     /**/                      /**/  DISTR,              /**/  TOG_HIDE,           /**/  TD(SKCH_SYMBOL),    /**/  RUNR_APPLY,         /**/  STYLE_CREATE,       /**/  TD(SKCH_LAYER_LIST),  /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  POS_PASTE,          /**/  POS_COPY,           /**/  LAYER_BACK,           /**/
+    /**/  ARTB_NEXT,          /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  POS_PASTE,          /**/  POS_COPY,           /**/  LAYER_BACK,           /**/
     /**/                      /**/                      /**/  ALGN_LEFT,          /**/  ALGN_BOTT,          /**/  ALGN_TOP,           /**/  ALGN_RIGHT,         /**/  LAYER_BACKWARD,       /**/
 
-    /**/  ARTB_PREV,          /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                        /**/
-    /**/  ARTB_NEXT,          /**/                      /**/                      /**/                      /**/                      /**/                      /**/                        /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                        /**/
+    /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/                        /**/
     /**/  KC_TRNS,            /**/  RUNR_RUN,           /**/  RUNR_GO_TO          /**/                      /**/                      /**/                      /**/                        /**/
     ),
 
@@ -551,9 +548,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /**/  M(PLVR_DICT),       /**/  KC_H,               /**/  KC_J,               /**/  KC_K,               /**/  KC_L,               /**/  KC_SCLN,            /**/  KC_QUOT,            /**/
     /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_NO,              /**/
 
-    /**/  (KC_TRNS),          /**/  KC_NO,              /**/                      /**/                      /**/                      /**/                      /**/                      /**/
-    /**/  (KC_TRNS),          /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/
-    /**/  (KC_TRNS),          /**/  KC_N,               /**/  KC_M                /**/                      /**/                      /**/                      /**/                      /**/
+    /**/  KC_TRNS,            /**/  KC_NO,              /**/                      /**/                      /**/                      /**/                      /**/                        /**/
+    /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/                        /**/
+    /**/  KC_TRNS,            /**/  KC_N,               /**/  KC_M                /**/                      /**/                      /**/                      /**/                        /**/
     ),
 
 
