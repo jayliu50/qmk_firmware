@@ -178,7 +178,8 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
     case CLEAR_MODS: {
         if (record->event.pressed) {
             // sometimes QMK will send a stuck mod keypress. This hopefully clears them.
-            return MACRO( U(LCTL), U(LSFT), U(LALT), U(LGUI), U(RCTL), U(RSFT), U(RALT), U(RGUI), END );
+            clear_mods();
+            return false;
         }
     }
     case WORK_ID: {
