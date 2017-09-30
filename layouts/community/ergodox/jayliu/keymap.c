@@ -24,7 +24,7 @@ enum {
 #define SMOD(x) (SCMD(x)) // SHIFT CMD in OSX
 
 #define SCRN_SHOT LCTL(LSFT(MOD(KC_4)))
-#define SCRN_SAVE LCTL(LSFT(KC_4))
+#define SCRN_SAVE LSFT(MOD(KC_4))
 
 // Sketch Layer
 #define ICON_ADD HYPR(KC_I)
@@ -359,7 +359,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [BASE] = KEYMAP(
 //  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/
-    /**/  KC_GRV,             /**/  KC_LT,              /**/  KC_LBRC,            /**/  KC_LCBR,            /**/  KC_LPRN,            /**/  KC_EQL,             /**/  KC_TRNS,            /**/
+    /**/  KC_GRV,             /**/  KC_LT,              /**/  KC_LBRC,            /**/  KC_LCBR,            /**/  KC_LPRN,            /**/  KC_EQL,             /**/  TD(JL_SCRN),        /**/
     /**/  KC_TAB,             /**/  KC_SCLN,            /**/  KC_COMM,            /**/  KC_DOT,             /**/  KC_P,               /**/  KC_Y,               /**/  MO(SYMB),           /**/
     /**/  KC_ENT,             /**/  KC_A,               /**/  KC_O,               /**/  KC_E,               /**/  KC_U,               /**/  KC_I,               /**/                      /**/
     /**/  KC_LSFT,            /**/  KC_QUOT,            /**/  KC_Q,               /**/  KC_J,               /**/  KC_K,               /**/  KC_X,               /**/  KC_DEL,             /**/
@@ -370,15 +370,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /**/                      /**/                      /**/                      /**/                      /**/  KC_SPC,             /**/  KC_LGUI,            /**/  MO(_DYN),           /**/
 
 
-    /**/  TD(JL_CP),          /**/  KC_GT,              /**/  KC_RPRN,            /**/  KC_RCBR,            /**/  KC_RBRC,            /**/  KC_EXLM,            /**/  KC_AT,              /**/
-    /**/  LT(SYMB, KC_PGUP),  /**/  KC_F,               /**/  KC_G,               /**/  KC_C,               /**/  KC_R,               /**/  KC_L,               /**/  KC_SLSH,            /**/
-    /**/                      /**/  KC_D,               /**/  KC_H,               /**/  KC_T,               /**/  KC_N,               /**/  KC_S,               /**/  KC_MINS,            /**/
-    /**/  KC_PGDN,            /**/  KC_B,               /**/  KC_M,               /**/  KC_W,               /**/  KC_V,               /**/  KC_Z,               /**/  KC_RSFT,            /**/
-    /**/                      /**/                      /**/  KC_LEFT,            /**/  KC_DOWN,            /**/  KC_UP,              /**/  KC_RGHT,            /**/  KC_SPC,             /**/
+    /**/  TD(JL_CP),          /**/  KC_GT,              /**/  KC_RPRN,            /**/  KC_RCBR,               /**/  KC_RBRC,            /**/  KC_EXLM,            /**/  KC_AT,              /**/
+    /**/  LT(SYMB, KC_PGUP),  /**/  KC_F,               /**/  KC_G,               /**/  KC_C,                  /**/  KC_R,               /**/  KC_L,               /**/  KC_SLSH,            /**/
+    /**/                      /**/  KC_D,               /**/  KC_H,               /**/  KC_T,                  /**/  KC_N,               /**/  KC_S,               /**/  KC_MINS,            /**/
+    /**/  KC_PGDN,            /**/  KC_B,               /**/  KC_M,               /**/  KC_W,                  /**/  KC_V,               /**/  KC_Z,               /**/  KC_RSFT,            /**/
+    /**/                      /**/                      /**/  KC_LEFT,            /**/  KC_DOWN,               /**/  KC_UP,              /**/  KC_RGHT,            /**/  KC_SPC,             /**/
 
-    /**/  KC_TRNS,            /**/  KC_RALT,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/
-    /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/
-    /**/  KC_ESC,             /**/  KC_RGUI,            /**/  KC_BSPC             /**/                      /**/                      /**/                      /**/                      /**/
+    /**/  KC_TRNS,            /**/  KC_RALT,            /**/                      /**/                         /**/                      /**/                      /**/                      /**/
+    /**/  KC_TRNS,            /**/                      /**/                      /**/                         /**/                      /**/                      /**/                      /**/
+    /**/  KC_ESC,             /**/  KC_RGUI,            /**/  KC_BSPC             /**/                         /**/                      /**/                      /**/                      /**/
     ),
 
 
@@ -556,10 +556,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_DYN] = KEYMAP(
 //  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  M(PER_ID),          /**/  M(WORK_ID),         /**/  KC_TRNS,            /**/  DYN_REC_START1,     /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  M(PER_ID),          /**/  M(WORK_ID),         /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  M(PER_EMAIL),       /**/  M(WORK_EMAIL),      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  M(PER_USER),        /**/  M(WORK_USER),       /**/  KC_TRNS,            /**/                      /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  M(PER_PH),          /**/  M(WORK_PH),         /**/  KC_TRNS,            /**/  DYN_MACRO_PLAY1,    /**/
+    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  M(PER_PH),          /**/  M(WORK_PH),         /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/                      /**/                      /**/
 
     /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
@@ -567,15 +567,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /**/                      /**/                      /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  (KC_TRNS),          /**/
 
 
-    /**/  DYN_REC_START2,     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
+    /**/  DYN_REC_START2,     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/  DYN_MACRO_PLAY2,    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
+    /**/  DYN_REC_START1,     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
 
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/
     /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/
-    /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS             /**/                      /**/                      /**/                      /**/                      /**/
+    /**/  DYN_REC_STOP,       /**/  DYN_MACRO_PLAY2,    /**/  DYN_MACRO_PLAY1     /**/                      /**/                      /**/                      /**/                      /**/
     ),
 
 
