@@ -9,3 +9,4 @@ BACKLIGHT_ENABLE     = no
 VISUALIZER_ENABLE    = yes
 LCD_BACKLIGHT_ENABLE = yes
 LCD_ENABLE           = yes
+UNICODE_ENABLE	     = yes

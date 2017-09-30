@@ -347,7 +347,14 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 /*=====  End of Tap Dance Configuration  ======*/
 
+/*===============================================
+=             Unicode Configuration             =
+===============================================*/
 
+#define SMILE 0x263A
+
+
+/*=====  End of Unicode Configuration  ======*/
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -357,7 +364,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // AlignTo Regex: /\*\*//l2
 // Wrapping required keycodes around (parens), typically for MO() and getting back to original layer
 
-[BASE] = KEYMAP(
+[BASE] = LAYOUT_ergodox(
 //  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/
     /**/  KC_GRV,             /**/  KC_LT,              /**/  KC_LBRC,            /**/  KC_LCBR,            /**/  KC_LPRN,            /**/  KC_EQL,             /**/  TD(JL_SCRN),        /**/
     /**/  KC_TAB,             /**/  KC_SCLN,            /**/  KC_COMM,            /**/  KC_DOT,             /**/  KC_P,               /**/  KC_Y,               /**/  MO(SYMB),           /**/
@@ -399,7 +406,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
 
 
-[SYMB] = KEYMAP(
+[SYMB] = LAYOUT_ergodox(
 //  /**/  ------------------  /**/  q                   /**/  w                   /**/  e                   /**/  r                   /**/  t                   /**/  ------------------  /**/
 //  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/
     /**/  KC_TRNS,            /**/  KC_7,               /**/  KC_5,               /**/  KC_3,               /**/  KC_1,               /**/  KC_9,               /**/  KC_TRNS,            /**/
@@ -415,7 +422,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  /**/  ------------------  /**/  y                   /**/  u                   /**/  i                   /**/  o                   /**/  p                   /**/  ------------------  /**/
     /**/  KC_TRNS,            /**/  KC_0,               /**/  KC_2,               /**/  KC_4,               /**/  KC_6,               /**/  KC_8,               /**/  KC_TRNS,            /**/
     /**/  (KC_TRNS),          /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_CIRC,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
-    /**/                      /**/  KC_DLR,             /**/  KC_HASH,            /**/  KC_TILD,            /**/  KC_AMPR,            /**/  KC_ASTR,            /**/  KC_TRNS,            /**/
+    /**/                      /**/  KC_DLR,             /**/  KC_HASH,            /**/  KC_TILD,            /**/  KC_AMPR,            /**/  KC_ASTR,            /**/  UC(SMILE),          /**/
     /**/  KC_TRNS,            /**/  KC_BSLS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
 
@@ -425,7 +432,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
 
-[FKEY] = KEYMAP(
+[FKEY] = LAYOUT_ergodox(
 //  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------     /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,               /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_MUTE,            /**/
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,               /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_VOLU,            /**/
@@ -451,7 +458,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 
-[NUMB] = KEYMAP(
+[NUMB] = LAYOUT_ergodox(
 //  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_UP,              /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
@@ -477,7 +484,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 
-[SUBL] = KEYMAP(
+[SUBL] = LAYOUT_ergodox(
 //  /**/  5                   /**/  4                   /**/  3                   /**/  2                   /**/  1                   /**/  1'                  /**/  2'                    /**/
 //  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------    /**/
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,              /**/
@@ -503,7 +510,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 
-[SKCH] = KEYMAP(
+[SKCH] = LAYOUT_ergodox(
 //  /**/  5                   /**/  4                   /**/  3                   /**/  2                   /**/  1                   /**/  1'                  /**/  2'                    /**/
 //  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------    /**/
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,              /**/
@@ -529,7 +536,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
 
-[PLVR] = KEYMAP(
+[PLVR] = LAYOUT_ergodox(
 //  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/
     /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/
     /**/  KC_NO,              /**/  KC_1,               /**/  KC_2,               /**/  KC_3,               /**/  KC_4,               /**/  KC_5,               /**/  MAGIC_TOGGLE_NKRO,  /**/
@@ -554,7 +561,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
 
-[_DYN] = KEYMAP(
+[_DYN] = LAYOUT_ergodox(
 //  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  M(PER_ID),          /**/  M(WORK_ID),         /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
     /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  M(PER_EMAIL),       /**/  M(WORK_EMAIL),      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/
@@ -584,7 +591,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // Runs just one time when the keyboard initializes.
 void matrix_init_user(void) {
-
+    // set_unicode_input_mode(UC_OSX);
 };
 
 
