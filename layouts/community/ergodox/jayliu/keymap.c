@@ -142,7 +142,14 @@ const uint16_t PROGMEM fn_actions[] = {
 // Macro Definitions
 enum {
   PLVR_TOG = 0,     // Plover toggle
-  PLVR_DICT,        // Plover dictionary
+  PLVR_DICT,        // Plover add to dictionary
+  PLVR_LOOK,        // Plover lookup dictionary
+  PLVR_RESET,       // Plover reset output
+  PLVR_UP_LAST,     // Plover upper case last word
+  PLVR_LO_LAST,     // Plover lower case last word
+  PLVR_TOG_AST,     // Plover toggle asterisk
+  PLVR_ADD_SP,      // Plover retroactively add space
+  PLVR_REM_SP,      // Plover retroactively remove space
   DBL_P0,           // 00
   CLEAR_MODS,       // Sends up key on all mods
 
@@ -171,7 +178,46 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
     case PLVR_DICT: {
         if (record->event.pressed) {
             // This will be interpreted by my Plover dictionary to open up the dictionary
-            return MACRO( D(N), D(L), D(COMM), D(O), D(T), D(M), D(B), D(D), W(10), U(N), U(L), U(COMM), U(O), U(T), U(M), U(B), U(D), END);
+            return MACRO( D(W), D(S), D(N), D(M), D(K), D(L), D(P), D(H), W(10), U(W), U(S), U(N), U(M), U(K), U(L), U(P), U(H), END);
+        }
+    }
+    case PLVR_LOOK: {
+        if (record->event.pressed) {
+            // This will be interpreted by my Plover dictionary to open up the dictionary
+            return MACRO( D(W), D(S), D(N), D(M), D(K), D(L), D(P), W(10), U(W), U(S), U(N), U(M), U(K), U(L), U(P), END);
+        }
+    }
+    case PLVR_RESET: {
+        if (record->event.pressed) {
+            // This will be interpreted by my Plover dictionary to open up the dictionary
+            return MACRO( D(F), D(N), D(H), D(U), D(P), W(10), U(F), U(N), U(H), U(U), U(P), END);
+        }
+    }
+    case PLVR_UP_LAST: {
+        if (record->event.pressed) {
+            // This will be interpreted by my Plover dictionary to open up the dictionary
+            return MACRO( D(H), D(M), D(I), D(LBRC), W(10), U(H), U(M), U(I), U(LBRC), END);
+        }
+    }
+    case PLVR_LO_LAST: {
+        if (record->event.pressed) {
+            // This will be interpreted by my Plover dictionary to open up the dictionary
+            return MACRO(D(R), D(F), D(V), D(N), D(H), D(J), D(LBRC), W(10), U(R), U(F), U(V), U(N), U(H), U(J), U(LBRC), END);
+        }
+    }case PLVR_TOG_AST: {
+        if (record->event.pressed) {
+            // This will be interpreted by my Plover dictionary to open up the dictionary
+            return MACRO( D(1), D(H), W(10), U(1), U(H), END);
+        }
+    }case PLVR_ADD_SP: {
+        if (record->event.pressed) {
+            // This will be interpreted by my Plover dictionary to open up the dictionary
+            return MACRO( D(C), D(U), D(I), D(SCLN), W(10), U(C), U(U), U(I), U(SCLN), END);
+        }
+    }case PLVR_REM_SP: {
+        if (record->event.pressed) {
+            // This will be interpreted by my Plover dictionary to open up the dictionary
+            return MACRO( D(W), D(S), D(U), D(I), D(SCLN), W(10), U(W), U(S), U(U), U(I), U(SCLN), END);
         }
     }
     case DBL_P0: {
@@ -539,9 +585,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [PLVR] = LAYOUT_ergodox(
 //  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/  ------------------  /**/
     /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/
-    /**/  KC_NO,              /**/  KC_1,               /**/  KC_2,               /**/  KC_3,               /**/  KC_4,               /**/  KC_5,               /**/  MAGIC_TOGGLE_NKRO,  /**/
+    /**/  KC_NO,              /**/  KC_1,               /**/  KC_2,               /**/  KC_3,               /**/  KC_4,               /**/  KC_5,               /**/  M(PLVR_LOOK),       /**/
     /**/  KC_NO,              /**/  KC_Q,               /**/  KC_W,               /**/  KC_E,               /**/  KC_R,               /**/  KC_T,               /**/                      /**/
-    /**/  KC_NO,              /**/  KC_A,               /**/  KC_S,               /**/  KC_D,               /**/  KC_F,               /**/  KC_G,               /**/  KC_NO,              /**/
+    /**/  KC_NO,              /**/  KC_A,               /**/  KC_S,               /**/  KC_D,               /**/  KC_F,               /**/  KC_G,               /**/  M(PLVR_DICT),       /**/
     /**/  KC_NO,              /**/  (KC_TRNS),          /**/  KC_NO,              /**/  KC_NO,              /**/  (KC_TRNS),          /**/                      /**/                      /**/
 
     /**/                      /**/                      /**/                      /**/                      /**/                      /**/  KC_NO,              /**/  KC_NO,              /**/
@@ -549,15 +595,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /**/                      /**/                      /**/                      /**/                      /**/  KC_C,               /**/  KC_V,               /**/  KC_NO,              /**/
 
 
-    /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/
+    /**/  MAGIC_TOGGLE_NKRO,  /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/  KC_NO,              /**/
     /**/  M(PLVR_TOG),        /**/  KC_6,               /**/  KC_7,               /**/  KC_8,               /**/  KC_9,               /**/  KC_0,               /**/  KC_NO,              /**/
     /**/                      /**/  KC_Y,               /**/  KC_U,               /**/  KC_I,               /**/  KC_O,               /**/  KC_P,               /**/  KC_LBRC,            /**/
-    /**/  M(PLVR_DICT),       /**/  KC_H,               /**/  KC_J,               /**/  KC_K,               /**/  KC_L,               /**/  KC_SCLN,            /**/  KC_QUOT,            /**/
-    /**/                      /**/                      /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_TRNS,            /**/  KC_NO,              /**/
+    /**/  M(PLVR_TOG_AST),    /**/  KC_H,               /**/  KC_J,               /**/  KC_K,               /**/  KC_L,               /**/  KC_SCLN,            /**/  KC_QUOT,            /**/
+    /**/                      /**/                      /**/  M(PLVR_REM_SP),     /**/  M(PLVR_LO_LAST),    /**/  M(PLVR_UP_LAST),    /**/  M(PLVR_ADD_SP),     /**/  KC_NO,              /**/
 
-    /**/  KC_TRNS,            /**/  KC_NO,              /**/                      /**/                      /**/                      /**/                      /**/                        /**/
-    /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/                        /**/
-    /**/  KC_TRNS,            /**/  KC_N,               /**/  KC_M                /**/                      /**/                      /**/                      /**/                        /**/
+    /**/  KC_TRNS,            /**/  KC_NO,              /**/                      /**/                      /**/                      /**/                      /**/                      /**/
+    /**/  KC_TRNS,            /**/                      /**/                      /**/                      /**/                      /**/                      /**/                      /**/
+    /**/  M(PLVR_RESET),      /**/  KC_N,               /**/  KC_M                /**/                      /**/                      /**/                      /**/                      /**/
     ),
 
 
